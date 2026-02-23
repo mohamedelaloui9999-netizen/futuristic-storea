@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOHAMED AL-ALOUI | FUTURE HUB</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --neon: #00ff9d;
+            --cyber: #00f3ff;
+            --plasma: #ff0055;
+            --void: #020205;
+        }
+
+        /* 🔒 بروتوكول الحماية ومنع النسخ */
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+        body { 
+            background: var(--void); color: white; 
+            font-family: 'Orbitron', 'Segoe UI', sans-serif; 
+            overflow-x: hidden; scroll-behavior: smooth;
+        }
+
+        /* 🌌 خلفية النجوم المتحركة */
+        #starfield {
+            position: fixed; inset: 0; z-index: -1;
+            background: radial-gradient(circle at center, #0a0a2e 0%, #000 100%);
+        }
+        .stars {
+            position: absolute; width: 200%; height: 200%;
+            background: url("https://www.transparenttextures.com/patterns/stardust.png");
+            animation: moveStars 150s linear infinite; opacity: 0.4;
+        }
+        @keyframes moveStars { from { transform: translate(0,0); } to { transform: translate(-500px, -500px); } }
+
+        /* 👽 شاشة البداية الذكية */
+        #loader {
+            position: fixed; inset: 0; background: #000; z-index: 99999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: 1.5s ease-in-out;
+        }
+        .alien-img { width: 120px; filter: drop-shadow(0 0 20px var(--neon)); animation: float 2s infinite alternate; }
+        @keyframes float { from { transform: translateY(0); } to { transform: translateY(-25px); } }
+
+        /* 📱 شريط الـ DNA الجانبي */
+        .sidebar-dna {
+            position: fixed; left: 20px; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 20px; z-index: 1000;
+        }
+        .dna-btn {
+            background: rgba(0, 255, 157, 0.1); border: 1px solid var(--neon);
+            padding: 15px; border-radius: 50%; color: var(--neon);
+            transition: 0.4s; backdrop-filter: blur(10px); text-decoration: none;
+        }
+        .dna-btn:hover { background: var(--neon); color: #000; box-shadow: 0 0 20px var(--neon); transform: scale(1.2); }
+
+        /* 🚀 الهيدر */
+        header { padding: 150px 20px 80px; text-align: center; }
+        .glitch-title {
+            font-size: clamp(2rem, 10vw, 5rem); color: var(--cyber);
+            text-shadow: 0 0 20px var(--cyber); letter-spacing: 5px; margin-bottom: 10px;
+        }
+        .location { color: var(--plasma); font-weight: bold; letter-spacing: 2px; }
+
+        /* 🛠 الأقسام والمحتوى */
+        section { padding: 60px 10%; opacity: 0; transform: translateY(50px); transition: 1s; }
+        section.show { opacity: 1; transform: translateY(0); }
+        h2 { color: var(--neon); font-size: 2rem; margin-bottom: 30px; border-right: 4px solid var(--plasma); padding-right: 15px; }
+
+        /* 📊 مهارات هولوغرامية */
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .skill-box {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(0,255,157,0.2);
+            padding: 25px; border-radius: 15px; transition: 0.5s;
+        }
+        .skill-box:hover { border-color: var(--neon); transform: translateY(-10px); background: rgba(0,255,157,0.05); }
+        .bar-bg { height: 8px; background: #111; border-radius: 10px; margin-top: 15px; overflow: hidden; }
+        .bar-fill { height: 100%; background: linear-gradient(90deg, var(--neon), var(--cyber)); width: 0; transition: 2s; }
+
+        /* 🛒 المتجر (Firebase Ready) */
+        .store-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .product-card {
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(0,243,255,0.1);
+            padding: 20px; border-radius: 20px; text-align: center; transition: 0.4s;
+        }
+        .product-card:hover { border-color: var(--cyber); transform: scale(1.03); }
+        .buy-btn {
+            width: 100%; padding: 12px; background: transparent; border: 1px solid var(--plasma);
+            color: var(--plasma); font-weight: bold; cursor: pointer; margin-top: 15px; transition: 0.3s;
+        }
+        .buy-btn:hover { background: var(--plasma); color: white; box-shadow: 0 0 15px var(--plasma); }
+
+        /* 🔴 تنبيه الحماية */
+        #security-notice {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%) scale(0);
+            background: var(--plasma); color: white; padding: 10px 30px; border-radius: 50px;
+            z-index: 100000; transition: 0.3s; font-weight: bold;
+        }
+        #security-notice.active { transform: translateX(-50%) scale(1); }
+
+    </style>
+</head>
+<body oncontextmenu="return triggerSecurity(event)">
+
+    <div id="security-notice">🚨 بروتوكول حماية محمد نشط!</div>
+
+    <div id="loader">
+        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" class="alien-img">
+        <h1 style="color: var(--neon); margin-top: 20px; letter-spacing: 5px;">SYSTEM LOADING...</h1>
+    </div>
+
+    <div id="starfield"><div class="stars"></div></div>
+
+    <div class="sidebar-dna">
+        <a href="https://instagram.com/m.o.h.a.m.e.d.9.9.9.9" target="_blank" class="dna-btn"><i class="fab fa-instagram"></i></a>
+        <a href="mailto:Mohamedelaloui333@gmail.com" class="dna-btn"><i class="fas fa-envelope"></i></a>
+        <a href="#" class="dna-btn" title="تحميل السيرة الذاتية"><i class="fas fa-file-pdf"></i></a>
+    </div>
+
+    <header>
+        <div class="location">MOROCCO | HQ 🇲🇦</div>
+        <h1 class="glitch-title">MOHAMED AL-ALOUI</h1>
+        <p style="color: var(--cyber);">مطور واجهات | مهتم بالأمن السيبراني | تقنيات المستقبل</p>
+    </header>
+
+    <section id="about">
+        <h2>👋 عني</h2>
+        <p style="line-height: 1.8; color: #ccc;">
+            أنا مبرمج من المغرب شغوف ببناء الأنظمة الرقمية وتطوير واجهات المستخدم بلمسة مستقبلية. 
+            أهدف إلى دمج الفن البرمجي مع قواعد الحماية والأمان السيبراني.
+        </p>
+    </section>
+
+    <section id="skills">
+        <h2>🛠 المهارات التقنية</h2>
+        <div class="skills-grid">
+            <div class="skill-box">
+                <h3>HTML/CSS</h3>
+                <div class="bar-bg"><div class="bar-fill" data-width="95%"></div></div>
+            </div>
+            <div class="skill-box">
+                <h3>JavaScript</h3>
+                <div class="bar-bg"><div class="bar-fill" data-width="80%"></div></div>
+            </div>
+            <div class="skill-box">
+                <h3>Python</h3>
+                <div class="bar-bg"><div class="bar-fill" data-width="75%"></div></div>
+            </div>
+            <div class="skill-box">
+                <h3>Cyber Security</h3>
+                <div class="bar-bg"><div class="bar-fill" data-width="65%"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="store">
+        <h2>🛒 متجر المنتجات</h2>
+        <div id="firebase-products" class="store-grid">
+            <p style="color: var(--cyber);">جارٍ الاتصال بقاعدة بيانات Firebase...</p>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 40px; color: #555; border-top: 1px solid #111;">
+        © 2026 Mohamed Al-Aloui | جميع الحقوق محفوظة برمجياً.
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <script>
+        // 1. إعدادات Firebase (استخدم بياناتك الحقيقية هنا)
+        const firebaseConfig = {
+            apiKey: "AIzaSyAS7skn241U3yge8x30jre2c54f2c7ca3a6",
+            authDomain: "mohamed-future-store.firebaseapp.com",
+            projectId: "mohamed-future-store",
+            storageBucket: "mohamed-future-store.appspot.com",
+            messagingSenderId: "14246138837",
+            appId: "1:14246138837:web:2c54f2c7ca3a6b6b"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // 2. إدارة شاشة التحميل والأنيميشن
+        window.onload = () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => document.getElementById('loader').remove(), 1000);
+                startAnimations();
+            }, 2500);
+        };
+
+        function startAnimations() {
+            // تفعيل ظهور الأقسام عند السكرول
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                        // تحريك أشرطة المهارات داخل القسم
+                        entry.target.querySelectorAll('.bar-fill').forEach(bar => {
+                            bar.style.width = bar.getAttribute('data-width');
+                        });
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            document.querySelectorAll('section').forEach(s => observer.observe(s));
+            loadProducts();
+        }
+
+        // 3. جلب المنتجات من Firebase
+        function loadProducts() {
+            const container = document.getElementById('firebase-products');
+            db.collection("منتجات").get().then((querySnapshot) => {
+                container.innerHTML = ""; // مسح رسالة التحميل
+                querySnapshot.forEach((doc) => {
+                    const item = doc.data();
+                    container.innerHTML += `
+                        <div class="product-card">
+                            <img src="${item.صورة || 'https://via.placeholder.com/150'}" style="width:100%; border-radius:10px;">
+                            <h3 style="margin:15px 0; color:var(--neon);">${item.اسم}</h3>
+                            <div style="font-size:1.5rem; color:var(--cyber);">${item.سعر} $</div>
+                            <button class="buy-btn" onclick="orderProduct('${item.اسم}')">إرسال طلب 📡</button>
+                        </div>
+                    `;
+                });
+            }).catch(err => {
+                container.innerHTML = "<p>يرجى التأكد من إعدادات Firebase لتظهر المنتجات.</p>";
+            });
+        }
+
+        function orderProduct(name) {
+            window.location.href = `mailto:Mohamedelaloui333@gmail.com?subject=طلب شراء: ${name}`;
+        }
+
+        // 4. نظام الحماية
+        function triggerSecurity(e) {
+            e.preventDefault();
+            const notice = document.getElementById('security-notice');
+            notice.classList.add('active');
+            setTimeout(() => notice.classList.remove('active'), 3000);
+            return false;
+        }
+
+        document.onkeydown = function(e) {
+            if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74))) {
+                triggerSecurity(e);
+                return false;
+            }
+        };
+    </script>
+</body>
+</html>
